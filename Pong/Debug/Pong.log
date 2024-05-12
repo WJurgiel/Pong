@@ -1,6 +1,5 @@
-﻿  Player.cpp
-  Source.cpp
-  Generating Code...
+﻿  Source.cpp
+C:\Users\Wojtek\source\repos\Pong\Pong\GameManager.h(20,19): warning C4228: nonstandard extension used: qualifiers after comma in declarator list are ignored
   Pong.vcxproj -> C:\Users\Wojtek\source\repos\Pong\Pong\Debug\Pong.exe
   'pwsh.exe' is not recognized as an internal or external command,
   operable program or batch file.

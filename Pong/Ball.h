@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "GameManager.h"
 class Ball
 {
 private:
@@ -9,8 +10,9 @@ private:
 	float speed;
 	float maxBounceAngle;
 	sf::CircleShape ball;
+	GameManager* gm;
 public:
-	Ball(float radius, float speed, float maxBounceAngle, sf::RenderWindow& window)
+	Ball(float radius, float speed, float maxBounceAngle, sf::RenderWindow& window, GameManager* gm)
 	{
 		this->radius = radius;
 		this->speed = speed;
@@ -21,6 +23,8 @@ public:
 		ball.setFillColor(sf::Color::White);
 		ball.setRadius(radius);
 		ball.setOrigin(0, 0);
+
+		this->gm = gm;
 	}
 	sf::Vector2f getPosition() {
 		return position;
@@ -31,10 +35,10 @@ public:
 	void kickBall() {
 		velocity = sf::Vector2f(speed, 0);
 	}
-	void restartBall(sf::Vector2f window_size,bool& isRoundStarted) {
+	void restartBall(sf::Vector2f window_size) {
 		position = sf::Vector2f(window_size.x / 2 - radius, window_size.y / 2 - radius);
 		velocity = sf::Vector2f(0.f, 0.f);
-		isRoundStarted = false;
+		gm->setIsRoundStarted(false);
 	}
 	void hitBall(float paddleHeight, float paddleY, std::string tag) {
 		float relativeY = (paddleY + paddleHeight / 2) - this->position.y;

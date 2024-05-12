@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include"Ball.h"
-
+#include "GameManager.h"
 class Wall{
 private:
 	sf::Vector2f position;
@@ -11,8 +11,9 @@ private:
 	Ball* ball = nullptr;
 	sf::Vector2f window_size;
 	bool* isRoundStarted;
+	GameManager* gm;
 public:
-	Wall(float xPos, float yPos, float width, float height, Ball* ball,sf::Vector2f window_sizes, bool& isRoundStarted, std::string wallTag){
+	Wall(float xPos, float yPos, float width, float height, GameManager* gm, Ball* ball,sf::Vector2f window_sizes, std::string wallTag){
 		position = sf::Vector2f(xPos, yPos);
 		size = sf::Vector2f(width, height);
 		this->ball = ball;
@@ -21,7 +22,8 @@ public:
 		rect.setSize(size);
 		rect.setFillColor(sf::Color::Cyan);
 		window_size = window_sizes;
-		this->isRoundStarted = &isRoundStarted;
+		//this->isRoundStarted = &isRoundStarted;
+		this->gm = gm;
 	}
 	void draw(sf::RenderWindow& window) {
 		window.draw(rect);
@@ -35,13 +37,14 @@ public:
 		}
 		if (tag == "Left") {
 			if(ball->getPosition().x  - radius <= position.x + size.x) {
-				ball->restartBall(window_size, *isRoundStarted);
-				//point for P2
+				gm->addPoint("P2");
+				ball->restartBall(window_size);
 			}
 		}
 		if (tag == "Right") {
 			if (ball->getPosition().x + radius >= position.x) {
-				ball->restartBall(window_size, *isRoundStarted);
+				gm->addPoint("P1");
+				ball->restartBall(window_size);
 				
 			}
 		}
